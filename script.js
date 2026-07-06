@@ -8,6 +8,7 @@ const expense = document.getElementById("expense");
 const search = document.getElementById("search");
 const filter = document.getElementById("filter");
 const monthFilter = document.getElementById("monthFilter");
+const yearFilter = document.getElementById("yearFilter");
 
 const submitBtn = document.getElementById("submitBtn");
 
@@ -15,6 +16,28 @@ let editId = null;
 
 let transactions =
 JSON.parse(localStorage.getItem("transactions")) || [];
+
+function loadYears(){
+
+    const years = [...new Set(
+        transactions.map(item =>
+            new Date(item.date).getFullYear()
+        )
+    )];
+
+    years.sort((a,b)=>a-b);
+
+    yearFilter.innerHTML =
+    `<option value="all">All Years</option>`;
+
+    years.forEach(year=>{
+
+        yearFilter.innerHTML +=
+        `<option value="${year}">${year}</option>`;
+
+    });
+
+}
 
 function save(){
 
@@ -34,28 +57,33 @@ function update(){
 
     const keyword=search.value.toLowerCase();
 
-    const filtered = transactions.filter(item => {
+    const filtered = transactions.filter(item=>{
 
         const matchesSearch =
-            item.text.toLowerCase().includes(keyword);
+        item.text.toLowerCase().includes(keyword);
 
         const matchesType =
-            filter.value === "all" ||
-            item.type === filter.value;
+        filter.value==="all" ||
+        item.type===filter.value;
 
-        let matchesMonth = true;
+        const date = new Date(item.date);
 
-        if (monthFilter.value !== "all") {
+        const transactionMonth = date.getMonth();
 
-            const month = new Date(item.date).getMonth();
+        const transactionYear = date.getFullYear();
 
-            matchesMonth = month == monthFilter.value;
+        const matchesMonth =
+            monthFilter.value==="all" ||
+            transactionMonth == monthFilter.value;
 
-        }
+        const matchesYear =
+            yearFilter.value==="all" ||
+            transactionYear == yearFilter.value;
 
         return matchesSearch &&
            matchesType &&
-           matchesMonth;
+           matchesMonth &&
+           matchesYear;
 
     });
     filtered.forEach(item=>{
@@ -127,7 +155,7 @@ function update(){
 
     balance.textContent=
     "₦"+(totalIncome-totalExpense).toLocaleString();
-
+    
     save();
 
 }
@@ -181,6 +209,8 @@ form.addEventListener("submit",function(e){
 
     form.reset();
 
+    loadYears()
+
     update();
 
 });
@@ -189,6 +219,8 @@ function removeTransaction(id){
 
     transactions=
     transactions.filter(item=>item.id!==id);
+
+    loadYears()
 
     update();
 
@@ -222,5 +254,9 @@ search.addEventListener("input",update);
 filter.addEventListener("change",update);
 
 monthFilter.addEventListener("change",update);
+
+yearFilter.addEventListener("change", update);
+
+loadYears()
 
 update();
