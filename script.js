@@ -34,27 +34,30 @@ function update(){
 
     const keyword=search.value.toLowerCase();
 
-    const filtered=transactions.filter(item=>{
+    const filtered = transactions.filter(item => {
 
-        const matchesSearch=
-        item.text.toLowerCase().includes(keyword);
+        const matchesSearch =
+            item.text.toLowerCase().includes(keyword);
 
-        const matchesType=
-        filter.value==="all" ||
-        item.type===filter.value;
+        const matchesType =
+            filter.value === "all" ||
+            item.type === filter.value;
 
-        const month=new Date(item.date).getMonth();
+        let matchesMonth = true;
 
-        const matchesMonth=
-        monthFilter.value==="all" ||
-        month==monthFilter.value;
+        if (monthFilter.value !== "all") {
+
+            const month = new Date(item.date).getMonth();
+
+            matchesMonth = month == monthFilter.value;
+
+        }
 
         return matchesSearch &&
-               matchesType &&
-               matchesMonth;
+           matchesType &&
+           matchesMonth;
 
     });
-
     filtered.forEach(item=>{
 
         const li=document.createElement("li");
@@ -103,20 +106,19 @@ function update(){
 
     });
 
-    transactions.forEach(item=>{
+    filtered.forEach(item => {
 
-        if(item.type==="income"){
+        if(item.type === "income"){
 
-            totalIncome+=Number(item.amount);
+            totalIncome += Number(item.amount);
 
         }else{
 
-            totalExpense+=Number(item.amount);
+            totalExpense += Number(item.amount);
 
         }
 
     });
-
     income.textContent=
     "₦"+totalIncome.toLocaleString();
 
