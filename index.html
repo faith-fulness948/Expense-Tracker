@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>💰 Expense Tracker</h1>
+
+    <div class="summary">
+
+        <div class="card balance">
+            <h3>Balance</h3>
+            <h2 id="balance">₦0</h2>
+        </div>
+
+        <div class="card income">
+            <h3>Income</h3>
+            <h2 id="income">₦0</h2>
+        </div>
+
+        <div class="card expense">
+            <h3>Expense</h3>
+            <h2 id="expense">₦0</h2>
+        </div>
+
+    </div>
+
+    <div class="controls">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search transaction..."
+        >
+
+        <select id="filter">
+            <option value="all">All Types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select>
+
+        <select id="monthFilter">
+            <option value="all">All Months</option>
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+        </select>
+
+    </div>
+
+    <form id="form">
+
+        <input
+            type="text"
+            id="text"
+            placeholder="Transaction Name"
+            required
+        >
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="Amount"
+            min="1"
+            required
+        >
+
+        <select id="type">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select>
+
+        <input
+            type="date"
+            id="date"
+            required
+        >
+
+        <button id="submitBtn">
+            Add Transaction
+        </button>
+
+    </form>
+
+    <ul id="list"></ul>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
