@@ -1,15 +1,12 @@
 const form = document.getElementById("form");
 const list = document.getElementById("list");
-
 const balance = document.getElementById("balance");
 const income = document.getElementById("income");
 const expense = document.getElementById("expense");
-
 const search = document.getElementById("search");
 const filter = document.getElementById("filter");
 const monthFilter = document.getElementById("monthFilter");
 const yearFilter = document.getElementById("yearFilter");
-
 const submitBtn = document.getElementById("submitBtn");
 
 let editId = null;
